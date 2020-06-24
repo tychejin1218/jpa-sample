@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.rest.api</groupId>
 	<artifactId>jpa-sample</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>jpa-sample</name>
 	<description>JPA SAMPLE</description>
 	<packaging>war</packaging>
