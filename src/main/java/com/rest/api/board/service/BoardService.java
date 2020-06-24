@@ -1,4 +1,4 @@
-package com.sample.board.service;
+package com.rest.api.board.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sample.board.domain.Board;
-import com.sample.board.repository.BoardRepository;
+import com.rest.api.board.domain.Board;
+import com.rest.api.board.repository.BoardRepository;
 
 @Service
 public class BoardService {

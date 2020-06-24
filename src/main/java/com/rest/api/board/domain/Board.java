@@ -1,4 +1,4 @@
-package com.sample.board.domain;
+package com.rest.api.board.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Entity(name = "TBL_BOARD")
 public class Board {
@@ -39,11 +41,5 @@ public class Board {
 	public void updateBoard(Board updateBoard) {
 		this.boardSubject = updateBoard.boardSubject;
 		this.boardContent = updateBoard.boardContent;
-	}
-
-	@Override
-	public String toString() {
-		return "Board [boardSeq=" + boardSeq + ", boardWriter=" + boardWriter + ", boardSubject=" + boardSubject
-		        + ", boardContent=" + boardContent + "]";
 	}
 }
