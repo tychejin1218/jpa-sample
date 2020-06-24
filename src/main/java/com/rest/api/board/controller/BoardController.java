@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rest.api.board.domain.Board;
 import com.rest.api.board.service.BoardService;
 
-@RequestMapping("/v1/boards")
+@RequestMapping("/v1/board")
 @RestController
 public class BoardController {
 
@@ -63,7 +63,7 @@ public class BoardController {
 
 		Board board = boardService.insertBoard(insertBoard);
 
-		return new ResponseEntity<Board>(board, HttpStatus.OK);
+		return new ResponseEntity<Board>(board, HttpStatus.CREATED);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class BoardController {
 
 		Board board = boardService.updateBoard(boardSeq, updateBoard);
 
-		return new ResponseEntity<Board>(board, HttpStatus.OK);
+		return new ResponseEntity<Board>(board, HttpStatus.CREATED);
 	}
 
 	/**
@@ -94,5 +94,4 @@ public class BoardController {
 
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
-
 }

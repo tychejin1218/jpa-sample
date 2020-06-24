@@ -1,6 +1,5 @@
 package com.rest.api.board.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +22,7 @@ public class BoardService {
 	 */
 	public List<Board> getBoardList() {
 
-		List<Board> boards = new ArrayList<>();
-
-		boardRepository.findAll()
-		               .forEach(e -> boards.add(e));
-
-		return boards;
+		return boardRepository.findAll();
 	}
 
 	/**
@@ -55,7 +49,7 @@ public class BoardService {
 	 * @param board
 	 */
 	public Board insertBoard(Board insertBoard) {
-
+		
 		return boardRepository.save(insertBoard);
 	}
 

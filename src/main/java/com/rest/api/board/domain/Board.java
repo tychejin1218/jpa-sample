@@ -37,7 +37,7 @@ public class Board {
 	public Board(Long boardSeq) {
 		this.boardSeq = boardSeq;
 	}
-
+	
 	public void updateBoard(Board updateBoard) {
 		this.boardSubject = updateBoard.boardSubject;
 		this.boardContent = updateBoard.boardContent;
