@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rest.api.board.domain.Board;
 import com.rest.api.board.service.BoardService;
 
-@RequestMapping("/api/boards")
+@RequestMapping("/v1/boards")
 @RestController
 public class BoardController {
 
