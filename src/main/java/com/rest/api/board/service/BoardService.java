@@ -38,7 +38,7 @@ public class BoardService {
 		Optional<Board> boardOptional = boardRepository.findById(boardSeq);
 		if (boardOptional.isPresent()) {
 			board = boardOptional.get();
-		}
+		} 
 
 		return board;
 	}
@@ -49,7 +49,7 @@ public class BoardService {
 	 * @param board
 	 */
 	public Board insertBoard(Board insertBoard) {
-		
+
 		return boardRepository.save(insertBoard);
 	}
 

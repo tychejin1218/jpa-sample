@@ -6,13 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.ToString;
 
 @ToString
 @Getter
-@Entity(name = "TBL_BOARD")
+@Entity
+@Table(name = "TBL_BOARD")
 public class Board {
 
 	@Id
@@ -20,7 +22,7 @@ public class Board {
 	@Column(name = "board_seq")
 	private Long boardSeq;
 
-	@Column(name = "board_writer", length = 20)
+	@Column(name = "board_writer")
 	private String boardWriter;
 
 	@Lob
