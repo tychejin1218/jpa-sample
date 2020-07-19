@@ -46,7 +46,7 @@ public class BoardController {
 		return new ResponseEntity<BoardResponseDto>(boardResponseDto, HttpStatus.OK);
 	}
 
-	/** 게시글 - 저장 */
+	/** 게시글 - 등록 */
 	@PostMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Long> insertBoard(@RequestBody BoardInsertRequestDto boardInsertRequestDto) {
 

@@ -40,7 +40,7 @@ public class BoardService {
 		return new BoardResponseDto(board);
 	}
 
-	/** 게시글 - 저장 */
+	/** 게시글 - 등록 */
 	@Transactional
 	public Long save(BoardInsertRequestDto boardInsertRequestDto) {
 
