@@ -1,85 +1,72 @@
 package com.rest.api.board.service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rest.api.board.domain.Board;
+import com.rest.api.board.dto.BoardInsertRequestDto;
+import com.rest.api.board.dto.BoardResponseDto;
+import com.rest.api.board.dto.BoardUpdateRequestDto;
 import com.rest.api.board.repository.BoardRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class BoardService {
 
-	@Autowired
-	private BoardRepository boardRepository;
+	private final BoardRepository boardRepository;
 
-	/**
-	 * 게시글 - 목록 조회
-	 * 
-	 * @return boards
-	 */
-	public List<Board> getBoardList() {
-
-		return boardRepository.findAll();
+	/** 게시글 - 목록 조회 */
+	@Transactional(readOnly = true)
+	public List<BoardResponseDto> findAll() {
+		
+		return boardRepository.findAll()
+		                      .stream()
+		                      .map(BoardResponseDto::new)
+		                      .collect(Collectors.toList());
 	}
 
-	/**
-	 * 게시글 - 상세 조회
-	 * 
-	 * @param boardSeq
-	 * @return
-	 */
-	public Board getBoard(Long boardSeq) {
+	/** 게시글 - 상세 조회 */
+	@Transactional(readOnly = true)
+	public BoardResponseDto findById(Long boardSeq) {
 
-		Board board = new Board();
+		Board board = boardRepository.findById(boardSeq)
+		                             .orElseThrow(() -> new IllegalAccessError("[boardSeq=" + boardSeq + "] 해당 게시글이 존재하지 않습니다."));
 
-		Optional<Board> boardOptional = boardRepository.findById(boardSeq);
-		if (boardOptional.isPresent()) {
-			board = boardOptional.get();
-		} 
-
-		return board;
+		return new BoardResponseDto(board);
 	}
 
-	/**
-	 * 게시글 - 저장
-	 *
-	 * @param board
-	 */
-	public Board insertBoard(Board insertBoard) {
+	/** 게시글 - 저장 */
+	@Transactional
+	public Long save(BoardInsertRequestDto boardInsertRequestDto) {
 
-		return boardRepository.save(insertBoard);
+		return boardRepository.save(boardInsertRequestDto.toEntity())
+		                      .getBoardSeq();
 	}
 
-	/**
-	 * 게시글 - 수정
-	 * 
-	 * @param boardSeq
-	 * @param board
-	 */
-	public Board updateBoard(Long boardSeq, Board updateBoard) {
+	/** 게시글 - 수정 */
+	@Transactional
+	public Long update(Long boardSeq, BoardUpdateRequestDto boardUpdateRequestDto) {
 
-		Board board = new Board();
+		Board board = boardRepository.findById(boardSeq)
+		                             .orElseThrow(() -> new IllegalAccessError("[boardSeq=" + boardSeq + "] 해당 게시글이 존재하지 않습니다."));
 
-		Optional<Board> boardOptional = boardRepository.findById(boardSeq);
-		if (boardOptional.isPresent()) {
-			board = boardOptional.get();
-		}
+		board.update(boardUpdateRequestDto.getBoardSubject(), boardUpdateRequestDto.getBoardContent());
 
-		board.updateBoard(updateBoard);
-
-		return boardRepository.save(board);
+		return boardSeq;
 	}
 
-	/**
-	 * 게시글 - 삭제
-	 * 
-	 * @param boardSeq
-	 */
-	public void deleteBoard(Long boardSeq) {
+	/** 게시글 - 삭제 */
+	@Transactional
+	public void delete(Long boardSeq) {
 
-		boardRepository.deleteById(boardSeq);
+		Board board = boardRepository.findById(boardSeq)
+		                             .orElseThrow(() -> new IllegalAccessError("[boardSeq=" + boardSeq + "] 해당 게시글이 존재하지 않습니다."));
+
+		boardRepository.delete(board);
 	}
 }

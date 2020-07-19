@@ -8,13 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
-@ToString
 @Getter
+@NoArgsConstructor
 @Entity
-@Table(name = "TBL_BOARD")
+@Table(name = "tbl_board")               
 public class Board {
 
 	@Id
@@ -22,26 +23,26 @@ public class Board {
 	@Column(name = "board_seq")
 	private Long boardSeq;
 
-	@Column(name = "board_writer")
-	private String boardWriter;
-
 	@Lob
 	@Column(name = "board_subject")
 	private String boardSubject;
+
+	@Column(name = "board_writer")
+	private String boardWriter;
 
 	@Lob
 	@Column(name = "board_content")
 	private String boardContent;
 
-	public Board() {
+	@Builder
+	public Board(String boardSubject, String boardWriter, String boardContent) {
+		this.boardSubject = boardSubject;
+		this.boardWriter = boardWriter;
+		this.boardContent = boardContent;
 	}
 
-	public Board(Long boardSeq) {
-		this.boardSeq = boardSeq;
-	}
-	
-	public void updateBoard(Board updateBoard) {
-		this.boardSubject = updateBoard.boardSubject;
-		this.boardContent = updateBoard.boardContent;
+	public void update(String boardSubject, String boardContent) {
+		this.boardSubject = boardSubject;
+		this.boardContent = boardContent;
 	}
 }

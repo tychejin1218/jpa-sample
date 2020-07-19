@@ -2,7 +2,6 @@ package com.rest.api.board.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,83 +14,62 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rest.api.board.domain.Board;
+import com.rest.api.board.dto.BoardInsertRequestDto;
+import com.rest.api.board.dto.BoardResponseDto;
+import com.rest.api.board.dto.BoardUpdateRequestDto;
 import com.rest.api.board.service.BoardService;
 
-@RequestMapping("/v1/board")
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/board")
 @RestController
 public class BoardController {
 
-	@Autowired
-	private BoardService boardService;
+	private final BoardService boardService;
 
-	/**
-	 * 게시글 - 목록 조회
-	 * 
-	 * @return
-	 */
+	/** 게시글 - 목록 조회  */
 	@GetMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<List<Board>> getBoardList() {
+	public ResponseEntity<List<BoardResponseDto>> getBoardList() {
 
-		List<Board> boardList = boardService.getBoardList();
+		List<BoardResponseDto> boardResponseDtoList = boardService.findAll();
 
-		return new ResponseEntity<List<Board>>(boardList, HttpStatus.OK);
+		return new ResponseEntity<List<BoardResponseDto>>(boardResponseDtoList, HttpStatus.OK);
 	}
 
-	/**
-	 * 게시글 - 상세 조회
-	 * 
-	 * @param boardSeq
-	 * @return
-	 */
+	/** 게시글 - 상세 조회 */
 	@GetMapping(value = "/{boardSeq}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Board> getBoard(@PathVariable("boardSeq") Long boardSeq) {
+	public ResponseEntity<BoardResponseDto> getBoard(@PathVariable("boardSeq") Long boardSeq) {
 
-		Board board = boardService.getBoard(boardSeq);
+		BoardResponseDto boardResponseDto = boardService.findById(boardSeq);
 
-		return new ResponseEntity<Board>(board, HttpStatus.OK);
+		return new ResponseEntity<BoardResponseDto>(boardResponseDto, HttpStatus.OK);
 	}
 
-	/**
-	 * 게시글 - 저장
-	 * 
-	 * @param insertBoard
-	 * @return
-	 */
+	/** 게시글 - 저장 */
 	@PostMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Board> insertBoard(@RequestBody Board insertBoard) {
+	public ResponseEntity<Long> insertBoard(@RequestBody BoardInsertRequestDto boardInsertRequestDto) {
 
-		Board board = boardService.insertBoard(insertBoard);
+		Long savedBoardSeq = boardService.save(boardInsertRequestDto);
 
-		return new ResponseEntity<Board>(board, HttpStatus.CREATED);
+		return new ResponseEntity<Long>(savedBoardSeq, HttpStatus.CREATED);
 	}
 
-	/**
-	 * 게시글 - 수정
-	 * 
-	 * @param boardSeq
-	 * @param updateBoard
-	 * @return
-	 */
+	/** 게시글 - 수정 */
 	@PutMapping(value = "/{boardSeq}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Board> updateBoard(@PathVariable("boardSeq") Long boardSeq, @RequestBody Board updateBoard) {
+	public ResponseEntity<Long> updateBoard(@PathVariable("boardSeq") Long boardSeq, @RequestBody BoardUpdateRequestDto boardUpdateRequestDto) {
 
-		Board board = boardService.updateBoard(boardSeq, updateBoard);
+		Long updatedboardSeq = boardService.update(boardSeq, boardUpdateRequestDto);
 
-		return new ResponseEntity<Board>(board, HttpStatus.CREATED);
+		return new ResponseEntity<Long>(updatedboardSeq, HttpStatus.CREATED);
 	}
 
-	/**
-	 * 게시글 - 삭제
-	 * 
-	 * @param boardSeq
-	 * @return
-	 */
+	/** 게시글 - 삭제 */
 	@DeleteMapping(value = "/{boardSeq}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Void> deleteBoard(@PathVariable("boardSeq") Long boardSeq) {
+	public ResponseEntity<Long> deleteBoard(@PathVariable("boardSeq") Long boardSeq) {
 
-		boardService.deleteBoard(boardSeq);
+		boardService.delete(boardSeq);
 
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Long>(boardSeq, HttpStatus.NO_CONTENT);
 	}
 }
