@@ -41,6 +41,8 @@ public class BoardControllerTest {
 		String url = "http://localhost:" + port + "/api/v1/board";
 
 		ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+		
+		System.out.println(responseEntity.getBody());
 
 		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(responseEntity.getBody()).contains("boardSeq");
