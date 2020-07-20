@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rest.api.board.dto.BoardSaveRequestDto;
 import com.rest.api.board.dto.BoardResponseDto;
+import com.rest.api.board.dto.BoardSaveRequestDto;
 import com.rest.api.board.dto.BoardUpdateRequestDto;
 import com.rest.api.board.service.BoardService;
 
