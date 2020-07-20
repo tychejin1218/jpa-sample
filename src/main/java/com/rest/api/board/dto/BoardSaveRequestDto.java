@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class BoardInsertRequestDto {
+public class BoardSaveRequestDto {
 
 	private String boardSubject;
 	private String boardWriter;
 	private String boardContent;
 
 	@Builder
-	public BoardInsertRequestDto(String boardSubject, String boardWriter, String boardContent) {
+	public BoardSaveRequestDto(String boardSubject, String boardWriter, String boardContent) {
 		this.boardSubject = boardSubject;
 		this.boardWriter = boardWriter;
 		this.boardContent = boardContent;

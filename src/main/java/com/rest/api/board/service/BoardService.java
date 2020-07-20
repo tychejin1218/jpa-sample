@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rest.api.board.domain.Board;
-import com.rest.api.board.dto.BoardInsertRequestDto;
+import com.rest.api.board.dto.BoardSaveRequestDto;
 import com.rest.api.board.dto.BoardResponseDto;
 import com.rest.api.board.dto.BoardUpdateRequestDto;
 import com.rest.api.board.repository.BoardRepository;
@@ -42,9 +42,9 @@ public class BoardService {
 
 	/** 게시글 - 등록 */
 	@Transactional
-	public Long save(BoardInsertRequestDto boardInsertRequestDto) {
+	public Long save(BoardSaveRequestDto boardSaveRequestDto) {
 
-		return boardRepository.save(boardInsertRequestDto.toEntity())
+		return boardRepository.save(boardSaveRequestDto.toEntity())
 		                      .getBoardSeq();
 	}
 
